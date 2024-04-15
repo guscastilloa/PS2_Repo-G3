@@ -108,7 +108,37 @@ De hecho, la distribución del ingreso permite ver una gran concentración de ho
 
 ## Modelos de Clasificación
 
+Para clasificar los hogares se buscó directamente predecir la clase $k\in\{Pobre, No Pobre  \}$, a la que pertenecen los hogares, en este sentido se trató de un problema de clasificación binaria pues solo hay dos clases posibles. Dado que un hogar es clasficado como pobre directamente si su ingreso es menor a una línea de pobreza, se buscó estimar la categoría de un hogar a partir de características socioeconómicas del hogar: proporción de mujeres, edad promedio de los integrantes del hogar, número de menores, etc. Así, el objetivo era aproximar la probabilidad condicional de que un hogar con cierto vector de características $\boldsymbol{X}$ fuera pobre o no, i.e. $\mathbb{P}[y_i = k | X_i = x]= p(x)$. La expresión analítica de $p(x)$ depende del modelo estimado. En las dos regresiones logísticas, con y sin regularización lasso, se preprocesaron estandarizandolas. En todos los modelos realizados se usaron 15 variables independientes: edad media del hogar, edad media al cuadrado, proporción de mujeres, proporción de estudiantes, proporción de personas buscando trabajo, proporción de personas dedicadas a oficios del hogar, proporción de personas con primaria, prop. de personas con secundaria, prop. de personas con educación superior, número de cuartos, prop. de personas en régimen contributivo, número de adultos mayores, dicotómica de hogar rural, y dicotómica de si la vivienta es arrendada. 
+
+<!-- Pobre ~ edad + edad_2 + Genero + estudiante + busca_trabajo  -->
+<!--                   + amo_casa + primaria + secundaria +  -->
+<!--                     media + superior+num_cuartos+contributivo+ -->
+<!--                     num_adulto+rural+vivienda_arriendo -->
+
+Utilizamos 6 diferentes algoritmos de clasificación: logit, QDA, LDA, *random forest*, *bagging* y *GBM*. Dado que cada uno de estos modelos "aprende" la frontera de decisión utilizando diferentes enfoques sus ecuaciones respectivas varían significativamente. El único modelo discriminativo que implementamos, el logit, directamente estima la probabilidad condicional mediante una función logística \@ref(eq:logit).     
+
+\begin{equation}
+\mathbb{P}[y_i| X_i ] = \frac{\exp(\boldsymbol{X\beta})}{1+\exp(\boldsymbol{X\beta})}
+(\#eq:logit)
+\end{equation}
+
+
+
+\begin{equation}
+\mathbb{P}[y_i=k| X_i=x ] = \frac{\pi_k f_k(x)}{\pi_1f_1(x) + \pi_2f_2(x)}, k\in\{0,1 \}
+(\#eq:discriminant)
+\end{equation}
+
+
+Los dos modelos generativos como el QDA y LDA en cambio descomponen $p(x)$ como una distribución posterior y mediante Bayes y haciendo supuestos sobre la densidad  $f_k(x)$ condicional a la clase $k$ la estiman de diferentes formas, en ambos casos suponiendo que surgen de distribuciones Gausianas mutivariadas. En el caso de LDA supone una varianza común entre las clases, $f_k(x) \sim \mathscr{N}(\mu_k, \Sigma)$, mientras que QDA supone una varianza y media específica a cada clase $f_k(x) \sim \mathscr{N}(\mu_k, \Sigma_k)$. 
+
+Los últimos modelos basados en árboles posibilita unas relaciones no lineales entre las características y la variable dicotómica de Pobre. Tanto el *Random Forest* como el *bagging* agregan varios árboles de forma independiente usando bootstrap en cada nuevo árbol, utilizando el primero un subconjunto alreatorio de los predictores en cada iteración. 
+
+
 ## Modelos de Predicción de Ingreso
+
+Los modelos de regresión tenían como objetivo predecir el ingreso del hogar, y a partir de este escoger el umbral de línea de pobreza a partir del cuál obtuviéramos el mejor desempeño fuera de muestra. Para este ejercicio utilizamos también
+
 
 ## Modelos Finales (QDA) 
 
