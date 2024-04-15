@@ -46,7 +46,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.pos = 'H')
 
 La lucha contra la pobreza ha sido un tema central en la agenda global durante décadas, debido a que afecta a millones de personas en el mundo. En este sentido organismos como el Banco Mundial han desempeñado un papel importante en la recopilación de datos y generación de análisis que ayudan a comprender la magnitud y las tendencias de la pobreza a nivel mundial. Sin embargo, este esfuerzo enfrenta desafíos especiales en países o regiones con limitaciones de datos, recursos, crisis y cambios constantes. 
 
-En este contexto, la predicción de la pobreza se vuelve fundamental para analizar como fenómenos como la pandemia de COVID-19 pueden estar afectando este aspecto, especialmente la pobreza extrema en diversas regiones (Yonzan, Mahler y Lakner, 2023). Se ha observado un avance en la generación de predicciones de la pobreza por parte de entidades como el Banco Mundial (Castaneda Aguilar et al., 2024), así como otras instituciones nacionales e internacionales, con el propósito de proporcionar información relevante para la formulación de políticas públicas.
+En este contexto, la predicción de la pobreza se vuelve fundamental para analizar como fenómenos como la pandemia de COVID-19 pueden estar afectando este aspecto, especialmente la pobreza extrema en diversas regiones [@yonzan]. Se ha observado un avance en la generación de predicciones de la pobreza por parte de entidades como el Banco Mundial [@wb], así como otras instituciones nacionales e internacionales, con el propósito de proporcionar información relevante para la formulación de políticas públicas.
 
 En Colombia, también se han realizado avances en la medición de la pobreza a través de organismos como el DANE y universidades. No obstante, continúa siendo un desafío importante, complejo y costoso que requiere cierto tiempo. Por lo tanto, la predicción de la pobreza mediante modelos de aprendizaje automático puede resultar eficiente y accesible para los territorios, ofreciendo una oportunidad para agilizar y mejorar la evaluación de la pobreza. Esto permitiría una mayor focalización de recursos y políticas, siendo aún más efectivo al incorporar datos específicos de cada territorio, como conflictos armados, condiciones de vida, estructura y actividad productiva.
 
@@ -64,7 +64,7 @@ Para el Problem Set se utilizó el módulo de pobreza monetaria de la Gran Encue
 Con la información de los ingresos el DANE calcula anualmente la pobreza monetaria. El Comité de Expertos emite los conceptos técnicos con los que se definen las líneas de pobreza y pobreza extrema con las que se clasifican a los hogares \footnote{En estricto sentido se denominan unidades de gasto, pero para simplificar se utilizará el términos hogares} como pobres. Si el ingreso per cápita es inferior a las líneas definidas, el hogar se considera pobre, pues no cuenta con los suficientes ingresos para cubrir los requerimientos nutricionales mínimos (pobreza extrema) o los bienes y servicios básicos [@conpes].
 Para cada uno de los miembros del hogar, se tienen en cuenta los ingresos por salarios, ganancias u honorarios, ingresos en especie, otras fuentes, para definir el ingreso total. Adicionalmente, se realizan imputaciones y correcciones a las bases de datos [@conpes], de tal manera que se obtiene información oportuna y de calidad.
 
-Para resolver la pregunta asociada al Problem Set se utilizó una base de datos previamente preparada para realizar predicciones sobre la pobreza monetaria e ingreso de la población Colombia en 2018. Esta base de datos descargada de *Kaggle* (@geih), cuenta con 762.753 observaciones a nivel de personas y 231.128 observaciones para hogares. La primera está divida en 543.109 observaciones en una base de entrenamiento (train) y 219.644 de prueba (test), y la segunda en 164.960 observaciones para entrenamiento y 66.168 de test.
+Para resolver la pregunta asociada al Problem Set se utilizó una base de datos previamente preparada para realizar predicciones sobre la pobreza monetaria e ingreso de la población Colombia en 2018. Esta base de datos descargada de *Kaggle* [@geih], cuenta con 762.753 observaciones a nivel de personas y 231.128 observaciones para hogares. La primera está divida en 543.109 observaciones en una base de entrenamiento (train) y 219.644 de prueba (test), y la segunda en 164.960 observaciones para entrenamiento y 66.168 de test.
 
 La división de las bases se realizó para efectos pedagógico, eliminando algunas de las variables de base de datos train. Por tal motivo, las predicciones se realizaron sólo con las variables compartidas por las bases train y test. Se manipularon las variables categóricas, creando *dummies* para cada categoría, y para continúas reemplazando con 0 valores perdidos. Como la predicción se realizó por hogar, se agregaron las variables como promedios y sumas de personas. Las estadísticas descriptivas de las variables transformadas utilizadas se observan a continuación:
 
@@ -74,8 +74,10 @@ La división de las bases se realizó para efectos pedagógico, eliminando algun
 
 stats <- arrow::read_parquet("../stores/train.parquet")
 stats <- data.frame(stats)
+stats$Ingtot <- stats$Ingtot/1000
+stats$Ingtotugarr <- stats$Ingtotugarr/1000
 stargazer::stargazer(stats, 
-          type = "latex", median = TRUE, digits =2,
+          type = "latex", digits =2,
           title="Estadísticas descriptivas",
           header=FALSE,
           table.placement = "H",
@@ -90,19 +92,6 @@ knitr::include_graphics('../views/g1.jpg')
 ```
 
 De hecho, la distribución del ingreso permite ver una gran concentración de hogares por debajo del ingreso promedio. Es por tanto, que es apremiante buscar alternativas para estimar la población pobre por otros medios, incluidos el Machine Learning.
-
-## Procesamiento de Datos
-
-### Consolidación de base "clean"
-
-### Construcción de variables (feature engineering)
-
-### Ejercicio con variables DANE
-
-
-## Análisis Descriptivo
-
-
 
 # Modelos y resultados
 
