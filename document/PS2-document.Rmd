@@ -5,7 +5,7 @@ author:
 - Alexander Almeida Ramírez (202225165),
 - Jorge Luis Congacha Yunda (201920042) y
 - Jaime Orlando Buitrago González (200612390)
-date: "`r Sys.Date()`"
+date: 14-04-2024
 output:
   bookdown::pdf_document2:
     number_sections: true
@@ -119,7 +119,7 @@ Utilizamos 6 diferentes algoritmos de clasificación: logit, QDA, LDA, *random f
 \end{equation}
 
 
-Los dos modelos generativos como el QDA y LDA en cambio descomponen $p(x)$ como una distribución posterior y mediante Bayes y haciendo supuestos sobre la densidad  $f_k(x)$ condicional a la clase $k$ la estiman de diferentes formas, en ambos casos suponiendo que surgen de distribuciones Gausianas mutivariadas. En el caso de LDA supone una varianza común entre las clases, $f_k(x) \sim \mathscr{N}(\mu_k, \Sigma)$, mientras que QDA supone una varianza y media específica a cada clase $f_k(x) \sim \mathscr{N}(\mu_k, \Sigma_k)$. 
+Los dos modelos generativos como el QDA y LDA en cambio descomponen $p(x)$ como una distribución posterior y mediante Bayes y haciendo supuestos sobre la densidad  $f_k(x)$ condicional a la clase $k$ la estiman de diferentes formas, en ambos casos suponiendo que surgen de distribuciones Gausianas mutivariadas. En el caso de LDA supone una varianza común entre las clases, mientras que QDA supone una varianza y media específica a cada clase. 
 
 Los últimos modelos basados en árboles posibilita unas relaciones no lineales entre las características y la variable dicotómica de Pobre. Tanto el *Random Forest* como el *bagging* agregan varios árboles de forma independiente usando bootstrap en cada nuevo árbol, utilizando el primero un subconjunto alreatorio de los predictores en cada iteración. 
 
@@ -193,14 +193,10 @@ Las métricas que se utilizaron para seleccionar el mejor modelo fue la exactitu
 
 En la gráfica x se puede observar la exactitud en la base test para cada uno de los modelos que se estimaron. El modelo con mejor rendimiento fue el qda(con un F1 de 0.56), seguido por el Logit-ridge(0.52). Los demás modelos, tuvieron rendimientos iguales o menores a 0.5 (random forest y logit del 0.5 y lda de 0.47). Una posible explicación a que el modelo QDA sea más preciso que el logit, el lda y el logit-ridge es porque el QDA es más flexible en términos de asumir diferentes matrices de covarianza para cada clase, lo que brinda una mayor capacidad de ajuste y permite adapatarse mejor al conjunto de datos. En cuanto al por qué el QDA tiene un mejor rendimiento que el random forest puede ser explicado porque al utilizar 15 variables, el modelo se estaría sobreajustando a los datos de entrenamiento, por lo que la predicción fuera de la muestra es baja. 
 
-```{r include_image, echo=FALSE, fig.cap="Comparación precisión de los modelos",fig.align='center', fig.pos='H'}
 
+```{r grap05, echo=FALSE, message=FALSE, out.width="55%" , message=FALSE, fig.cap="Comparación precisión", dpi=300}
 knitr::include_graphics('../views/comparacion_modelos.png')
 ```
-
-
-
-# Conclusiones
 
 
 # Referencias bibliográficas
