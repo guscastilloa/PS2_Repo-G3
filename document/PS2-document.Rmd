@@ -72,7 +72,7 @@ stargazer::stargazer(stats,
 
 Como se observa en la tabla anterior, en la base de entrenamiento predominan las personas con formación hasta media y superior (20\% y 26\%, respectivamente), la mayoría tiene hijos menores (75\%), la mitad tiene población ocupada y es mujer (50\%). Tomando en cuenta que el ingreso promedio es de 2,1 millones y la cantidad de personas promedio es de 3.2 personas, el ingreso per cápita es de $641.032,3, lo cual supera las líneas de pobreza e indigencia. No obstante, también se observa una desviación estándar alta, incluso superior al ingreso promedio, esto explica que el 20\% de los hogares sean pobres.
 
-```{r grap02, echo=FALSE, message=FALSE, out.width="55%" , message=FALSE, fig.cap="Distribución del ingreso. Base", dpi=300}
+```{r grap02, echo=FALSE, message=FALSE, out.width="55%" , message=FALSE, fig.cap="Distribución del ingreso. Base train", dpi=300}
 knitr::include_graphics('../views/g1.jpg')
 ```
 
