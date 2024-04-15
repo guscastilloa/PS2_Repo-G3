@@ -126,7 +126,7 @@ Los últimos modelos basados en árboles posibilita unas relaciones no lineales 
 
 ## Modelos de Predicción de Ingreso
 
-Los modelos de regresión tenían como objetivo predecir el ingreso del hogar, y a partir de este escoger el umbral de línea de pobreza a partir del cuál obtuviéramos el mejor desempeño fuera de muestra. Para este ejercicio utilizamos también
+Los modelos de regresión tenían como objetivo predecir el ingreso del hogar, y a partir de este escoger el umbral de línea de pobreza a partir del cuál obtuviéramos el mejor desempeño fuera de muestra. Para este ejercicio utilizamos también los mismos algoritmos que aquellos usados previamente. Se supuso una relación lineal entre los predictores y el ingreso y se predijo el ingreso mediante los modelos de regresión tradicionales.
 
 
 ## Modelos Finales (QDA) 
