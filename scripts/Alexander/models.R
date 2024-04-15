@@ -65,6 +65,20 @@ qda <- train(
              data = train,
              method = "qda"
 )
+modelo_qda <- qda( Pobre ~ edad + edad_2 + Genero + estudiante + busca_trabajo +
+                     amo_casa + primaria + secundaria + media + superior+
+                     num_cuartos+contributivo+num_adulto+rural+vivienda_arriendo, data = train)
+
+p1 <- ggplot(data = train, aes(x = superior, fill = Pobre)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p2 <- ggplot(data = train, aes(x = edad, fill = Pobre)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p3 <- ggplot(data = train, aes(x = contributivo, fill = Pobre)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+
+ggarrange(p1,p2,p3, nrow = 3, common.legend = TRUE, legend = "bottom")
+
+
 #Realizar la predicción fuera de la muestra
 test$pobre <- predict(qda, test)
 
@@ -230,4 +244,15 @@ submit<-test  %>% select(id,pobre)
 write.csv(submit,"stores/Submissions/Alexander/classification_boosting.csv",row.names=FALSE)
 gbm_tree
 
+#Crear la gráfica de la exactitud en los modelos. 
+Accuracy<- data.frame( Model= c("Logit", "Logit-ridge", "lda","qda","Random Forest"),
+                  testAUC= c(0.50, 0.52, 0.47, 0.56,0.50)
+)
+
+ggplot(Accuracy, aes(x =  reorder(Model, Accuracy), y = testAUC)) +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  labs(title = "Comparación entre Modelos",
+       x = "Modelo",
+       y = "Accuracy test") +
+  theme_minimal()
  
